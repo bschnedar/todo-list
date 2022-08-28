@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <style>
+            body{
+                background-color: black;
+                color: rgb(173, 125, 157);
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <input id="todo_name" type="text"/>
+        <button onclick = "addTodo()">Add Todo</button>
+        <script>
+            document.title = "To Do List + ";
+
+
+            let todos = ['a','b'];
+            todos.push('c');
+
+            todos.forEach(
+                function (text)
+                {
+                    let item = document.createElement('div');
+                    item.innerText = text;
+                    document.body.appendChild(item);
+                }
+            );
+            
+            function addTodo(){
+                let textbox = document.getElementById('todo_name');
+                let todo_n = textbox.value;
+                todos.push(todo_n);
+            };
+            
+        </script>
+    </body>
+
+</html>
