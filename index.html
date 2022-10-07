@@ -10,30 +10,95 @@
             }
         </style>
     </head>
+    
+
     <body>
         <input id="todo_name" type="text"/>
-        <button onclick = "addTodo()">Add Todo</button>
+        <input id = "todo_date" type="date"> 
+        <button id="add_button" onclick = "addTodo()">Add Todo</button>
+
+
+        <div id="list"></div>
+       
+
+        
         <script>
-            document.title = "To Do List + ";
 
+            //Model
+            let todos = [];
 
-            let todos = ['a','b'];
-            todos.push('c');
-
-            todos.forEach(
-                function (text)
-                {
-                    let item = document.createElement('div');
-                    item.innerText = text;
-                    document.body.appendChild(item);
-                }
-            );
+            function createTodo(todo_n,due_date,idn){
+                todos.push({
+                    taskTitle: todo_n,
+                    taskDate: due_date,
+                    id: idn
+                });
+            }
             
+            function removeTodo(delId){
+                todos = todos.filter( function(todos){       
+                    if(delId === todos.id){
+                        return false;
+                    }   
+                    return true;
+                    
+                    
+                });
+            }
+
+            //Controller
             function addTodo(){
-                let textbox = document.getElementById('todo_name');
-                let todo_n = textbox.value;
-                todos.push(todo_n);
+                const textbox = document.getElementById('todo_name');
+                const todo_n = textbox.value;
+
+                const date2 = document.getElementById('todo_date');
+                const due_date = date2.value;
+
+                const idn = '' + new Date().getTime();
+
+            
+                createTodo(todo_n,due_date,idn);
+                
+        
+                render();
             };
+
+            function deleteTodo(event){
+                
+                const delBut = event.target;
+                const delId = delBut.id;
+            
+                removeTodo(delId);
+
+
+                render();
+            }
+
+            //View
+            function render(){  //Update the list
+                document.getElementById('list').innerHTML = ''; //Clear the list
+
+                todos.forEach(
+                function (todos)
+                {
+                    const item = document.createElement('div');
+                    item.innerText = todos.taskTitle + ' ' + todos.taskDate;
+                    
+                    const task_delete = document.createElement('button');
+                    task_delete.style = "border-width: none; background-color: rgb(173, 125, 157);";
+                    task_delete.onclick = deleteTodo;
+                    task_delete.innerText = "Delete";
+                    task_delete.id = todos.id;
+
+
+                    const list2 = document.getElementById('list');
+
+                    list2.appendChild(item);
+                    list2.appendChild(task_delete);
+                }
+                );
+            };
+            
             
         </script>
     </body>
