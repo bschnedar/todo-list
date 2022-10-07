@@ -23,9 +23,17 @@
 
         
         <script>
-
+            let todos;
             //Model
-            let todos = [];
+            const savef = JSON.parse(localStorage.getItem('key'));
+
+            if(Array.isArray(savef)){
+                todos = savef;
+            }
+            else{
+                todos = [];
+            }
+             
 
             function createTodo(todo_n,due_date,idn){
                 todos.push({
@@ -33,6 +41,8 @@
                     taskDate: due_date,
                     id: idn
                 });
+
+                saveList();
             }
             
             function removeTodo(delId){
@@ -44,6 +54,12 @@
                     
                     
                 });
+
+                saveList();
+            }
+
+            function saveList(){
+                localStorage.setItem('key', JSON.stringify(todos));
             }
 
             //Controller
